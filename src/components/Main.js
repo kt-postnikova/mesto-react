@@ -6,10 +6,11 @@ import Card from './Card'
 
 function Main(props) {
 
-    const [isUserName, setUserName] = React.useState();
-    const [isUserDescription, setUserDescription] = React.useState();
-    const [isUserAvatar, setUserAvatar] = React.useState();
+    const [isUserName, setUserName] = React.useState('');
+    const [isUserDescription, setUserDescription] = React.useState('');
+    const [isUserAvatar, setUserAvatar] = React.useState('');
 
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -18,8 +19,20 @@ function Main(props) {
                 setUserDescription(res.about);
                 setUserAvatar(res.avatar);
             })
-    })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
 
+    React.useEffect(() => {
+        api.getCards()
+            .then(res => {
+                setCards(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
 
     return (
         <main className="content page__content">
@@ -40,14 +53,12 @@ function Main(props) {
             </section>
             <section id="elements" className="elements content__elements">
                 {
-                    props.cards.map(card =>
-                        < Card
-                            key={card._id}
-                            card={card}
-                            onCardClick={props.onCardClick}
-                        >
-                        </Card>
-                    )
+                    cards.map(card =>
+                    (<Card
+                        key={card._id}
+                        card={card}
+                        onCardClick={props.onCardClick}></Card>
+                    ))
                 }
             </section>
         </main >

@@ -5,15 +5,13 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import Card from './Card';
-import api from '../utils/api';
+
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
-  const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
 
@@ -42,13 +40,6 @@ function App() {
   }
 
 
-  React.useEffect(() => {
-    api.getCards()
-      .then(res => {
-        setCards(res);
-      })
-  })
-
   return (
     <>
       <Header />
@@ -56,16 +47,15 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onAddPlace={handleAddPlaceClick}
         onEditProfile={handleEditProfileClick}
-
         onCardClick={handleCardClick}
-        cards={cards}
       />
       <Footer />
       <PopupWithForm
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         name="user-info"
-        title="Редактировать профиль">
+        title="Редактировать профиль"
+        button="Сохранить">
         <label className="form__field">
           <input id="name-input" className="form__input form__input_type_name" name="name" type="text"
             minLength="2" maxLength="40" required />
@@ -81,7 +71,8 @@ function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         name="add-card"
-        title="Новое место">
+        title="Новое место"
+        button="Создать">
         <label className="form__field">
           <input id="title-input" className="form__input form__input_type_title" name="title" type="text"
             placeholder="Название" minLength="1" maxLength="30" required />
@@ -97,7 +88,8 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         name="edit-avatar"
-        title="Обновить аватар">
+        title="Обновить аватар"
+        button="Сохранить">
         <label className="form__field form__field_under">
           <input id="avatar-input" className="form__input form__input_type_avatar" name="link" type="url"
             required />
@@ -106,7 +98,8 @@ function App() {
       </PopupWithForm>
       <PopupWithForm
         name="delete-card"
-        title="Вы уверены?">
+        title="Вы уверены?"
+        button="Да">
 
       </PopupWithForm>
       <ImagePopup
