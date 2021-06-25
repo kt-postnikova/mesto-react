@@ -35,6 +35,7 @@ function Main(props) {
                     (<Card
                         key={card._id}
                         card={card}
+                        currentUser={currentUser}
                         onCardClick={props.onCardClick}></Card>
                     ))
                 }
