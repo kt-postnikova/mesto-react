@@ -42,6 +42,16 @@ class Api extends React.Component {
             .then(this._getResponseData)
     }
 
+
+    changeLikeCardStatus(cardId, isLiked) {
+        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+            method: `${isLiked ? 'PUT' : 'DELETE'}`,
+            headers: this.headers
+        })
+            .then(this._getResponseData)
+    }
+
+
     putLike(cardId) {
         return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
             method: 'PUT',
