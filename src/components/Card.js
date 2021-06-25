@@ -2,24 +2,25 @@ import React from 'react';
 
 function Card(props) {
 
-    function handleCardClick() {
-        props.onCardClick(props.card);
-    }
-
-    // Определяем, являемся ли мы владельцем текущей карточки
     const isOwn = props.card.owner._id === props.currentUser._id;
-
-    // Создаём переменную, которую после зададим в `className` для кнопки удаления
+    const isLiked = props.card.likes.some(i => {
+        return i._id === props.currentUser._id
+    });
+    const cardLikeButtonClassName = (
+        `like__button ${isLiked ? 'like__button_active' : ''}`
+    );
     const cardDeleteButtonClassName = (
         `element__trash-btn ${isOwn ? 'element__trash-btn_visible' : 'element__trash-btn_hidden'}`
     );
 
 
-    // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-    const isLiked = props.card.likes.some(i => i._id === props.currentUser._id);
+    function handleCardClick() {
+        props.onCardClick(props.card);
+    }
 
-    // Создаём переменную, которую после зададим в `className` для кнопки лайка
-    const cardLikeButtonClassName = `...`;
+    function handleLikeClick() {
+        props.onCardLike(props.card)
+    }
 
     return (
         <>
@@ -29,7 +30,7 @@ function Card(props) {
                 <div className="element__block">
                     <h2 className="element__title">{props.card.name}</h2>
                     <div className="like">
-                        <button className="like__button" type="button" aria-label="Нравится"></button>
+                        <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button" aria-label="Нравится"></button>
                         <span className="like__counter">{props.card.likes.length}</span>
                     </div>
                 </div>
