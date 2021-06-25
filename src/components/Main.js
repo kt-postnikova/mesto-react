@@ -1,4 +1,5 @@
 import React from 'react';
+import { CardsContext } from '../contexts/CardsContext';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import profileAddButton from '../images/add-button.svg';
 import api from '../utils/api';
@@ -7,19 +8,9 @@ import Card from './Card'
 
 function Main(props) {
 
-    const [cards, setCards] = React.useState([]);
     const currentUser = React.useContext(CurrentUserContext);
+    const cards = React.useContext(CardsContext)
 
-
-    React.useEffect(() => {
-        api.getCards()
-            .then(res => {
-                setCards(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [])
 
     return (
         <main className="content page__content">
