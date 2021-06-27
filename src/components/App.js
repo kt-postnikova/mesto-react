@@ -73,6 +73,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditProfile={handleEditProfileClick}
           onCardClick={handleCardClick}
+          setCards={setCards}
         />
         <Footer />
         <PopupWithForm

@@ -52,21 +52,21 @@ class Api extends React.Component {
     }
 
 
-    putLike(cardId) {
-        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-            method: 'PUT',
-            headers: this.headers,
-        })
-            .then(this._getResponseData)
-    }
+    // putLike(cardId) {
+    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+    //         method: 'PUT',
+    //         headers: this.headers,
+    //     })
+    //         .then(this._getResponseData)
+    // }
 
-    deleteLike(cardId) {
-        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-            method: 'DELETE',
-            headers: this.headers,
-        })
-            .then(this._getResponseData)
-    }
+    // deleteLike(cardId) {
+    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+    //         method: 'DELETE',
+    //         headers: this.headers,
+    //     })
+    //         .then(this._getResponseData)
+    // }
 
     getUserInfo() {
         return fetch(`${this.baseUrl}` + '/users/me', {
