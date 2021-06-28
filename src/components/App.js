@@ -5,6 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -73,6 +74,15 @@ function App() {
     setEditProfilePopupOpen(false);
   }
 
+  function handleUpdateAvatar(card) {
+    api.editAvatar(card)
+      .then(res => {
+        setCurrentUser(res)
+      })
+
+    setEditAvatarPopupOpen(false)
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CardsContext.Provider value={cards}>
@@ -126,7 +136,7 @@ function App() {
             <span className="form__error link-input-error"></span>
           </label>
         </PopupWithForm>
-        <PopupWithForm
+        {/* <PopupWithForm
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           name="edit-avatar"
@@ -137,7 +147,14 @@ function App() {
               required />
             <span className="form__error avatar-input-error"></span>
           </label>
-        </PopupWithForm>
+        </PopupWithForm> */}
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}>
+        </EditAvatarPopup>
+
         <PopupWithForm
           name="delete-card"
           title="Вы уверены?"

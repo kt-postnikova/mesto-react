@@ -93,7 +93,7 @@ class Api extends React.Component {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                avatar: inputValues.link
+                avatar: inputValues.avatar
             })
         })
             .then(this._getResponseData)
