@@ -87,6 +87,7 @@ class Api extends React.Component {
             .then(this._getResponseData)
     }
 
+
     editAvatar(inputValues) {
         return fetch(`${this.baseUrl}` + '/users/me/avatar', {
             method: 'PATCH',

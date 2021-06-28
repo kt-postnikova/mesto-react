@@ -4,6 +4,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -63,6 +64,14 @@ function App() {
     setSelectedCard(card)
   }
 
+  function handleUpdateUser(card) {
+    api.editUserInfo(card)
+      .then(res => {
+        setCurrentUser(res)
+      })
+
+    setEditProfilePopupOpen(false);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -76,7 +85,7 @@ function App() {
           setCards={setCards}
         />
         <Footer />
-        <PopupWithForm
+        {/* <PopupWithForm
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           name="user-info"
@@ -92,7 +101,14 @@ function App() {
               minLength="2" maxLength="200" required />
             <span className="form__error about-input-error"></span>
           </label>
-        </PopupWithForm>
+        </PopupWithForm> */}
+
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}>
+        </EditProfilePopup>
+
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
