@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -21,6 +22,8 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   const [currentUser, setCurrentUser] = React.useState('');
+
+  //const cards = React.useContext(CardsContext)
 
 
   React.useEffect(() => {
@@ -83,6 +86,38 @@ function App() {
     setEditAvatarPopupOpen(false)
   }
 
+
+
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(res => {
+        setCards((state) => {
+          return state.filter(newArr => {
+            return newArr !== card
+          })
+        })
+      })
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api.createCard(card)
+      .then(newCard => {
+        setCards([newCard, ...cards])
+      })
+
+    setAddPlacePopupOpen(false);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CardsContext.Provider value={cards}>
@@ -92,6 +127,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditProfile={handleEditProfileClick}
           onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
           setCards={setCards}
         />
         <Footer />
@@ -119,7 +157,7 @@ function App() {
           onUpdateUser={handleUpdateUser}>
         </EditProfilePopup>
 
-        <PopupWithForm
+        {/* <PopupWithForm
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           name="add-card"
@@ -135,7 +173,7 @@ function App() {
               placeholder="Ссылка на картинку" required />
             <span className="form__error link-input-error"></span>
           </label>
-        </PopupWithForm>
+        </PopupWithForm> */}
         {/* <PopupWithForm
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
@@ -149,12 +187,16 @@ function App() {
           </label>
         </PopupWithForm> */}
 
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}>
+        </AddPlacePopup>
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}>
         </EditAvatarPopup>
-
         <PopupWithForm
           name="delete-card"
           title="Вы уверены?"

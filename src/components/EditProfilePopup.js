@@ -45,7 +45,7 @@ function EditProfilePopup(props) {
                 <input
                     id="name-input"
                     className="form__input form__input_type_name"
-                    value={name}
+                    value={name || ''}
                     onChange={handleChangeName}
                     name="name"
                     type="text"
@@ -58,7 +58,7 @@ function EditProfilePopup(props) {
                 <input
                     id="about-input"
                     className="form__input form__input_type_about"
-                    value={description}
+                    value={description || ''}
                     onChange={handleChangeDescription}
                     name="about"
                     type="text"
