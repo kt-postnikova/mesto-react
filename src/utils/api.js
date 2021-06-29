@@ -42,21 +42,31 @@ class Api extends React.Component {
             .then(this._getResponseData)
     }
 
-    putLike(cardId) {
+
+    changeLikeCardStatus(cardId, isLiked) {
         return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-            method: 'PUT',
-            headers: this.headers,
+            method: `${isLiked ? 'PUT' : 'DELETE'}`,
+            headers: this.headers
         })
             .then(this._getResponseData)
     }
 
-    deleteLike(cardId) {
-        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-            method: 'DELETE',
-            headers: this.headers,
-        })
-            .then(this._getResponseData)
-    }
+
+    // putLike(cardId) {
+    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+    //         method: 'PUT',
+    //         headers: this.headers,
+    //     })
+    //         .then(this._getResponseData)
+    // }
+
+    // deleteLike(cardId) {
+    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+    //         method: 'DELETE',
+    //         headers: this.headers,
+    //     })
+    //         .then(this._getResponseData)
+    // }
 
     getUserInfo() {
         return fetch(`${this.baseUrl}` + '/users/me', {
@@ -77,12 +87,13 @@ class Api extends React.Component {
             .then(this._getResponseData)
     }
 
+
     editAvatar(inputValues) {
         return fetch(`${this.baseUrl}` + '/users/me/avatar', {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                avatar: inputValues.link
+                avatar: inputValues.avatar
             })
         })
             .then(this._getResponseData)
