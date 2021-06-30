@@ -2,10 +2,6 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
-
-    const titleRef = React.useRef();
-    const linkRef = React.useRef();
-
     const [title, setTitle] = React.useState('');
     const [link, setLink] = React.useState('');
 
@@ -22,8 +18,8 @@ function AddPlacePopup(props) {
         e.preventDefault();
 
         props.onAddPlace({
-            title: titleRef.current.value,
-            link: linkRef.current.value,
+            title: title,
+            link: link,
         })
     }
 
@@ -38,7 +34,6 @@ function AddPlacePopup(props) {
             <label className="form__field">
                 <input
                     id="title-input"
-                    ref={titleRef}
                     className="form__input form__input_type_title"
                     value={title}
                     onChange={handleChangeTitle}
@@ -53,7 +48,6 @@ function AddPlacePopup(props) {
             <label className="form__field">
                 <input
                     id="link-input"
-                    ref={linkRef}
                     className="form__input form__input_type_link"
                     value={link}
                     onChange={handleChangeLink}
