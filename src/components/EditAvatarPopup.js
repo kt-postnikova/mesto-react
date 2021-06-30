@@ -6,12 +6,6 @@ function EditAvatarPopup(props) {
 
     const avatarRef = React.useRef();
 
-    const [avatar, setAvatar] = React.useState('');
-
-    function handleChangeAvatar(e) {
-        setAvatar(e.target.value)
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -33,8 +27,6 @@ function EditAvatarPopup(props) {
                     id="avatar-input"
                     ref={avatarRef}
                     className="form__input form__input_type_avatar"
-                    value={avatar}
-                    onChange={handleChangeAvatar}
                     name="link"
                     type="url"
                     required />
